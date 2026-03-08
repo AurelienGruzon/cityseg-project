@@ -1,0 +1,36 @@
+# dataset
+data/
+
+# notebooks
+notebooks/
+
+# mlflow
+mlruns/
+
+# outputs
+outputs/
+
+# git
+.git
+.gitignore
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+
+# env
+.venv/
+.env
+
+# tests
+tests/
+
+# docs
+*.md
+
+# cache
+.pytest_cache/
+
+# OS
+.DS_Store
