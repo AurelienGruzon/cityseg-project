@@ -217,3 +217,17 @@ mlruns.db
 # Trained models
 models/*.keras
 models/*.h5
+
+__pycache__/
+*.pyc
+
+mlruns/
+notebooks/mlruns/
+outputs/
+data/gtFine/
+data/leftImg8bit/
+
+.venv/
+.env
+
+*.keras
