@@ -72,11 +72,15 @@ def _map_to_groups(img: tf.Tensor, mask_label_ids: tf.Tensor) -> Tuple[tf.Tensor
 
 
 def _augment_train(img: tf.Tensor, mask: tf.Tensor) -> Tuple[tf.Tensor, tf.Tensor]:
-    # flip horizontal 50%
     coin = tf.random.uniform([]) > 0.5
     img = tf.cond(coin, lambda: tf.image.flip_left_right(img), lambda: img)
     mask = tf.cond(coin, lambda: tf.image.flip_left_right(mask[..., None]), lambda: mask[..., None])
     mask = tf.squeeze(mask, axis=-1)
+
+    img = tf.image.random_brightness(img, max_delta=0.05)
+    img = tf.image.random_contrast(img, lower=0.95, upper=1.05)
+    img = tf.clip_by_value(img, 0.0, 1.0)
+
     return img, mask
 
 
@@ -87,6 +91,7 @@ def make_cityscapes_ds(
     target_hw: Tuple[int, int],
     batch_size: int,
     training: bool,
+    use_augmentation: bool = True,
     shuffle_buffer: int = 1024,
     cache: bool = False,
     seed: int = 42,
@@ -110,7 +115,7 @@ def make_cityscapes_ds(
     ds = ds.map(lambda img, m: _resize_example(img, m, target_hw), num_parallel_calls=tf.data.AUTOTUNE)
     ds = ds.map(_map_to_groups, num_parallel_calls=tf.data.AUTOTUNE)
 
-    if training:
+    if training and use_augmentation:
         ds = ds.map(_augment_train, num_parallel_calls=tf.data.AUTOTUNE)
 
     ds = ds.map(_add_sample_weights_ignore_void, num_parallel_calls=tf.data.AUTOTUNE)

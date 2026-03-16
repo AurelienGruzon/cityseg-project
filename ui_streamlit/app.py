@@ -15,8 +15,8 @@ st.set_page_config(page_title="CitySeg Demo", layout="wide")
 
 # Ajuste cette URL si besoin.
 DEFAULT_API_URL = "https://cityseg-api-hwhqavd3a2arhfd5.francecentral-01.azurewebsites.net"
-DEFAULT_IMAGES_DIR = Path("data/leftImg8bit/val")
-DEFAULT_MASKS_DIR = Path("data/gtFine/val")
+DEFAULT_IMAGES_DIR = Path("samples/leftImg8bit/val")
+DEFAULT_MASKS_DIR = Path("samples/gtFine/val")
 
 
 # -----------------------------
